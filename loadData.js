@@ -80,10 +80,10 @@ $.ajax( { url: url,
     displayConfig(document.getElementById("distroVersionDiv"), "Distro: ", distroVersion);
     displayConfig(document.getElementById("kernelVersionDiv"), "Kernel: ", kernelVersion);
     displayConfig(document.getElementById("cpuCoreCountDiv"), "CPU Cores: ", cpuCoreCount);
-    displayData("cpuLoadContainer", cpuLoad, "CPU Load", "%");
-    displayData("procCountContainer", procCount, "Process Count", "");
-    displayData("ramUsedContainer", ramUsedPercentage, "RAM Usage", "%");
-    displayData("diskUsedContainer", diskUsedPercentage, "Disk Usage", "%");
+    displayData("cpuLoadContainer", cpuLoad, "CPU Load", "%", "255,12,32,.5", "CPU Percent Usage");
+    displayData("procCountContainer", procCount, "Process Count", "", "12,143,221,.2", "Processors in Use");
+    displayData("ramUsedContainer", ramUsedPercentage, "RAM Usage", "%", "32,135,147,.3", "Percent of Ram Used");
+    displayData("diskUsedContainer", diskUsedPercentage, "Disk Usage", "%", "69,24,169,.4", "Percent of Disk Used");
 });
 
 function calcDiff(array1, array2, outputArray) {
@@ -110,19 +110,24 @@ function calcPercentage(arrayNum, arrayDenom, outputArray) {
     }
 }
 
-function displayData(container, array, title, mSuffix) {
+function displayData(container, array, title, mSuffix, color, yaxis) {
     var chart = new CanvasJS.Chart(container, {
         theme: "theme2",//theme1
         title:{
             text: title              
         },
+        axisX: {
+            title: "Date",
+        },
         axisY: {
+            title: yaxis,
             suffix: mSuffix,
         },
         data: [              
             {
 		// Change type to "bar", "splineArea", "area", "spline", "pie",etc.
                 type: "area",
+                color: "rgba(" + color + ")",
                 dataPoints: array
             }
         ]
