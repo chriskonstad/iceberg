@@ -24,7 +24,12 @@ var procTwoLoad = new Array();
 function loadData(array, data, field0, field1) {
     for(var i=0; i<data.length; i++) {
         array.push({
-            x: Number(data[i].timestamp),
+            x: new Date(
+                getFullYear(Number(data[i].timestamp),
+                getMonth(Number(data[i].timestamp)
+                getDate(Number(data[i].timestamp)
+                getHours(Number(data[i].timestamp)
+                getMinutes(Number(data[i].timestamp)),
             y: field1 ? Number(data[i][field0][field1]) : Number(data[i][field0])
         });
     }
@@ -54,10 +59,6 @@ $.ajax( { url: url,
     loadData(procTwoLoad, data, "proc2", "load");
 });
 
-for(var i=0; i<loadArray.length; i++) {
-    document.write(loadArray[i].x);
-    document.write("<br>");
-}
 
 
        
