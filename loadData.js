@@ -33,12 +33,22 @@ function loadData(array, data, field0, field1, isNum) {
     for(var i=0; i<data.length; i++) {
         if(isNum) {
 	    array.push({
-            x: Number(data[i].timestamp),
+            x: new Date(
+                getFullYear(Number(data[i].timestamp),
+                getMonth(Number(data[i].timestamp)
+                getDate(Number(data[i].timestamp)
+                getHours(Number(data[i].timestamp)
+                getMinutes(Number(data[i].timestamp)),
 		y: field1 ? Number(data[i][field0][field1]) : Number(data[i][field0])
 	    });
 	} else {
 	    array.push({
-		x: Number(data[i].timestamp),
+            x: new Date(
+                getFullYear(Number(data[i].timestamp),
+                getMonth(Number(data[i].timestamp)
+                getDate(Number(data[i].timestamp)
+                getHours(Number(data[i].timestamp)
+                getMinutes(Number(data[i].timestamp)),
 		y: field1 ? data[i][field0][field1] : data[i][field0]
             });
 	}
