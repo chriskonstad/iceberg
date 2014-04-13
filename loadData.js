@@ -113,15 +113,21 @@ function calcPercentage(arrayNum, arrayDenom, outputArray) {
 function displayData(container, array, title, mSuffix, color, yaxis) {
     var chart = new CanvasJS.Chart(container, {
         theme: "theme2",//theme1
+	backgroundColor: "#E9E9E9",
         title:{
-            text: title              
+            text: title,
+	    fontFamily: "Avant Garde, Calibri"
         },
         axisX: {
             title: "Date",
+	    titleFontFamily: "Avant Garde, Calibri",
+	    labelFontFamily: "Avant Garde, Calibri",
         },
         axisY: {
             title: yaxis,
             suffix: mSuffix,
+	    titleFontFamily: "Avant Garde, Calibri",
+	    labelFontFamily: "Avant Garde, Calibri"
         },
         data: [              
             {
@@ -129,7 +135,7 @@ function displayData(container, array, title, mSuffix, color, yaxis) {
                 type: "area",
                 color: "rgba(" + color + ")",
                 dataPoints: array
-            }
+            },
         ]
     });
 
