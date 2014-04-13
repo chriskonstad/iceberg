@@ -59,6 +59,7 @@ $.ajax( { url: url,
     loadData(procCount, data, "cpuload", "proccount", true);
     loadData(diskTotal, data, "disk", "total", true);
     loadData(diskFree, data, "disk", "free", true);
+    calcDiff(diskTotal, diskFree, diskUsed);
     loadData(procZeroUser, data, "proc0", "user", false);
     loadData(procZeroName, data, "proc0", "name", false);
     loadData(procZeroLoad, data, "proc0", "load", true);
@@ -75,6 +76,7 @@ $.ajax( { url: url,
     displayData("cpuLoadContainer", loadArray, "CPU Load");
     displayData("procCountContainer", procCount, "Process Count");
     displayData("ramUsedContainer", ramUsed, "RAM Usage");
+    displayData("diskUsedContainer", diskUsed, "Disk Usage");
 });
 
 function calcDiff(array1, array2, outputArray) {
@@ -95,7 +97,7 @@ function displayData(container, array, title) {
         data: [              
             {
 		// Change type to "bar", "splineArea", "area", "spline", "pie",etc.
-                type: "line",
+                type: "area",
                 dataPoints: array
             }
         ]
