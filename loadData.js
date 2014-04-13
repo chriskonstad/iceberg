@@ -35,9 +35,9 @@ function loadData(array, data, field0, field1, isNum) {
 	    array.push({
             x: new Date(
                 getFullYear(Number(data[i].timestamp),
-                getMonth(Number(data[i].timestamp)
-                getDate(Number(data[i].timestamp)
-                getHours(Number(data[i].timestamp)
+                getMonth(Number(data[i].timestamp),
+                getDate(Number(data[i].timestamp),
+                getHours(Number(data[i].timestamp),
                 getMinutes(Number(data[i].timestamp)),
 		y: field1 ? Number(data[i][field0][field1]) : Number(data[i][field0])
 	    });
