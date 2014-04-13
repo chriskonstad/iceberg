@@ -80,10 +80,10 @@ $.ajax( { url: url,
     displayConfig(document.getElementById("distroVersionDiv"), "Distro: ", distroVersion);
     displayConfig(document.getElementById("kernelVersionDiv"), "Kernel: ", kernelVersion);
     displayConfig(document.getElementById("cpuCoreCountDiv"), "CPU Cores: ", cpuCoreCount);
-    displayData("cpuLoadContainer", cpuLoad, "CPU Load (%)");
-    displayData("procCountContainer", procCount, "Process Count");
-    displayData("ramUsedContainer", ramUsedPercentage, "RAM Usage (%)");
-    displayData("diskUsedContainer", diskUsedPercentage, "Disk Usage (%)");
+    displayData("cpuLoadContainer", cpuLoad, "CPU Load", "%");
+    displayData("procCountContainer", procCount, "Process Count", "");
+    displayData("ramUsedContainer", ramUsedPercentage, "RAM Usage", "%");
+    displayData("diskUsedContainer", diskUsedPercentage, "Disk Usage", "%");
 });
 
 function calcDiff(array1, array2, outputArray) {
@@ -110,11 +110,14 @@ function calcPercentage(arrayNum, arrayDenom, outputArray) {
     }
 }
 
-function displayData(container, array, title) {
+function displayData(container, array, title, mSuffix) {
     var chart = new CanvasJS.Chart(container, {
         theme: "theme2",//theme1
         title:{
             text: title              
+        },
+        axisY: {
+            suffix: mSuffix,
         },
         data: [              
             {
