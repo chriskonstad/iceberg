@@ -1,9 +1,10 @@
 var url = "https://api.mongolab.com/api/1/databases/iceberg/collections/Digger?apiKey=TLPNhHLyazSmXH3eaVOyhHQ8xP-vD_LL";
 
-var loadArray = new Array();
+var cpuLoad = new Array();
 var ramFree = new Array();
 var ramTotal = new Array();
 var ramUsed = new Array();
+var ramUsedPercentage = new Array();
 var cpuCoreCount = new Array();
 var procCount = new Array();
 var kernelVersion = new Array();
@@ -11,6 +12,7 @@ var distroVersion = new Array();
 var diskTotal = new Array();
 var diskFree = new Array();
 var diskUsed = new Array();
+var diskUsedPercentage = new Array();
 var procZeroUser = new Array();
 var procZeroName = new Array();
 var procZeroLoad = new Array();
@@ -52,14 +54,19 @@ $.ajax( { url: url,
     loadData(ramTotal, data, "ram", "total", true);
     loadData(ramFree, data, "ram", "free", true);
     calcDiff(ramTotal, ramFree, ramUsed);
+    calcPercentage(ramUsed, ramTotal, ramUsedPercentage);
+    convertPercentageRange(ramUsedPercentage);
     loadData(cpuCoreCount, data, "cpucorecount", "", true);
     loadData(kernelVersion, data, "kernelversion", "", false);
     loadData(distroVersion, data, "distro", "", false);
-    loadData(loadArray, data, "cpuload", "avg15", true);
+    loadData(cpuLoad, data, "cpuload", "avg15", true);
+    convertPercentageRange(cpuLoad);
     loadData(procCount, data, "cpuload", "proccount", true);
     loadData(diskTotal, data, "disk", "total", true);
     loadData(diskFree, data, "disk", "free", true);
     calcDiff(diskTotal, diskFree, diskUsed);
+    calcPercentage(diskUsed, diskFree, diskUsedPercentage);
+    convertPercentageRange(diskUsedPercentage);
     loadData(procZeroUser, data, "proc0", "user", false);
     loadData(procZeroName, data, "proc0", "name", false);
     loadData(procZeroLoad, data, "proc0", "load", true);
@@ -73,10 +80,10 @@ $.ajax( { url: url,
     displayConfig(document.getElementById("distroVersionDiv"), "Distro: ", distroVersion);
     displayConfig(document.getElementById("kernelVersionDiv"), "Kernel: ", kernelVersion);
     displayConfig(document.getElementById("cpuCoreCountDiv"), "CPU Cores: ", cpuCoreCount);
-    displayData("cpuLoadContainer", loadArray, "CPU Load");
+    displayData("cpuLoadContainer", cpuLoad, "CPU Load (%)");
     displayData("procCountContainer", procCount, "Process Count");
-    displayData("ramUsedContainer", ramUsed, "RAM Usage");
-    displayData("diskUsedContainer", diskUsed, "Disk Usage");
+    displayData("ramUsedContainer", ramUsedPercentage, "RAM Usage (%)");
+    displayData("diskUsedContainer", diskUsedPercentage, "Disk Usage (%)");
 });
 
 function calcDiff(array1, array2, outputArray) {
@@ -85,6 +92,21 @@ function calcDiff(array1, array2, outputArray) {
 	    x:array1[i]["x"],
 	    y:Number(Number(array1[i]["y"]) - Number(array2[i]["y"]))
 	    });
+    }
+}
+
+function convertPercentageRange(array) {
+    for(var i=0; i<array.length; i++) {
+	array[i]["y"] = Number(array[i]["y"] * 100);
+    }
+}
+
+function calcPercentage(arrayNum, arrayDenom, outputArray) {
+    for(var i=0; i<arrayNum.length; i++) {
+	outputArray.push({
+	    x:arrayNum[i]["x"],
+	    y:Number(Number(arrayNum[i]["y"]) / Number(arrayDenom[i]["y"]))
+	});
     }
 }
 
