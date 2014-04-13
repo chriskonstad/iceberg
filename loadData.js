@@ -33,22 +33,12 @@ function loadData(array, data, field0, field1, isNum) {
     for(var i=0; i<data.length; i++) {
         if(isNum) {
 	    array.push({
-            x: new Date(
-                getFullYear(Number(data[i].timestamp),
-                getMonth(Number(data[i].timestamp),
-                getDate(Number(data[i].timestamp),
-                getHours(Number(data[i].timestamp),
-                getMinutes(Number(data[i].timestamp)),
+		x: new Date(Number(data[i].timestamp*1000)),
 		y: field1 ? Number(data[i][field0][field1]) : Number(data[i][field0])
 	    });
 	} else {
 	    array.push({
-            x: new Date(
-                getFullYear(Number(data[i].timestamp),
-                getMonth(Number(data[i].timestamp)
-                getDate(Number(data[i].timestamp)
-                getHours(Number(data[i].timestamp)
-                getMinutes(Number(data[i].timestamp)),
+		x: new Date(Number(data[i].timestamp*1000)),
 		y: field1 ? data[i][field0][field1] : data[i][field0]
             });
 	}
@@ -92,7 +82,7 @@ $.ajax( { url: url,
 function calcDiff(array1, array2, outputArray) {
     for(var i=0; i<array1.length; i++) {
 	outputArray.push({
-	    x:Number(array1[i]["x"]),
+	    x:array1[i]["x"],
 	    y:Number(Number(array1[i]["y"]) - Number(array2[i]["y"]))
 	    });
     }
