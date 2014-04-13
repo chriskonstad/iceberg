@@ -31,8 +31,17 @@ for(var i=0; i<10; i++) {
     });
 }
 
+function compare(a,b) {
+  if (a.x < b.x)
+     return -1;
+  if (a.x > b.x)
+    return 1;
+  return 0;
+}
+
 function loadData(array, data, field0, field1, isNum) {
     for(var i=0; i<data.length; i++) {
+	console.log(i);
         if(isNum) {
 	    array.push({
 		x: new Date(Number(data[i].timestamp*1000)),
@@ -43,6 +52,16 @@ function loadData(array, data, field0, field1, isNum) {
 		x: new Date(Number(data[i].timestamp*1000)),
 		y: field1 ? data[i][field0][field1] : data[i][field0]
             });
+	}
+    }
+    array.sort(compare);
+    for(var i=0; i<Number(data.length-1); i++) {
+	if(data[i].timestamp > data[i+1].timestamp) {
+	    console.log("Found bad data at " + Number(i+1));
+	    console.log(data[12].timestamp);
+	    console.log(data[13].timestamp);
+	    console.log(data[14].timestamp);
+	    console.log(data[15].timestamp);
 	}
     }
 }
